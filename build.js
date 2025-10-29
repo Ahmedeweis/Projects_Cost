@@ -10,6 +10,6 @@ const buildTime = new Date().toLocaleString('ar-EG', {
 });
 const htmlPath = path.join(__dirname, 'index.html');
 let html = fs.readFileSync(htmlPath, 'utf8');
-html = html.replace('BUILD_TIME_PLACEHOLDER', buildTime);
+html = html.replace(/BUILD_TIME_PLACEHOLDER/g, buildTime);
 fs.writeFileSync(htmlPath, html);
 console.log('تم تحديث وقت البناء:', buildTime);

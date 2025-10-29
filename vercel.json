@@ -2,15 +2,8 @@
     "builds": [
         {
             "src": "index.html",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "."
-            }
+            "use": "@vercel/static-build"
         }
     ],
-    "build": {
-        "env": {
-            "BUILD_TIME": "{{now}}"
-        }
-    }
+    "buildCommand": "npm run build"
 }
