@@ -129,12 +129,77 @@
                 color: #2c3e50;
             }
         }
+
+        .last-update {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 50px;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .last-update:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .last-update .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            font-size: 0.8rem;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+        }
+
+        .last-update .time {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        /* للجوال */
+        @media (max-width: 480px) {
+            .last-update {
+                font-size: 0.9rem;
+                padding: 10px 16px;
+                gap: 8px;
+            }
+
+            .last-update .icon {
+                width: 24px;
+                height: 24px;
+                font-size: 0.7rem;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div style="text-align:center; margin:20px 0; color:#555; font-size:0.9rem;">
-        آخر تحديث: <span>29/10/2025 5:34PM</span>
+    <div class="last-update">
+        <span class="icon">تحديث</span>
+        آخر تحديث:
+        <span class="time">29/10/2025 5:34PM</span>
     </div>
     <div class="container">
         <h1>Projects Cost</h1>
