@@ -133,6 +133,9 @@
 </head>
 
 <body>
+    <div style="text-align:center; margin:20px 0; color:#555; font-size:0.9rem;">
+        آخر تحديث: <span id="lastUpdate">جاري التحميل...</span>
+    </div>
     <div class="container">
         <h1>Projects Cost</h1>
         <!-- جدول المشاريع -->
@@ -205,6 +208,17 @@
                 resTbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">لا توجد بيانات للبحث</td></tr>`;
             }
         });
+    </script>
+    <script>
+        // جلب آخر تحديث من ملف نصي (يُحدّث بواسطة GitHub Actions)
+        fetch('last-update.txt')
+            .then(r => r.text())
+            .then(text => {
+                document.getElementById('lastUpdate').textContent = text.trim();
+            })
+            .catch(() => {
+                document.getElementById('lastUpdate').textContent = 'غير متوفر';
+            });
     </script>
 </body>
 
