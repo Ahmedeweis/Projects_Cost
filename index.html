@@ -199,7 +199,7 @@
 <body>
     <div class="last-update">
         آخر تحديث:
-        <span class="time">30/10/2025 2:37PM</span>
+        <span class="time">8/11/2025 8:03PM</span>
     </div>
     <div class="container">
         <h1>Projects Cost</h1>
@@ -217,9 +217,24 @@
             </thead>
             <tbody></tbody>
         </table>
-        <!-- جدول البحث (Project Research) -->
+        <!-- جدول البحث -->
         <h2>Project Research</h2>
         <table id="researchTable">
+            <thead>
+                <tr>
+                    <th>اسم المشروع</th>
+                    <th>التكلفة الإجمالية</th>
+                    <th>المدفوع</th>
+                    <th>الباقي</th>
+                    <th>نوع التكنولوجيا</th>
+                    <th>ملاحظات</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <!-- جدول المشاريع الملغاة -->
+        <h2 style="color: red;">Cancelled Projects</h2>
+        <table id="cancelledTable">
             <thead>
                 <tr>
                     <th>اسم المشروع</th>
@@ -235,43 +250,46 @@
     </div>
     <script>
         const data = {
+            //{ "name": "مشروع البيع الشبكي", "totalCost": 5000, "paid": 1000, "technology": "React js", "notes": "قيد التطوير" },
             "projects": [
                 { "name": "Jammat", "totalCost": 5300, "paid": 3300, "technology": "Vue js", "notes": "تم التنفيذ بنسبة 99%" },
-                { "name": "مشروع البيع الشبكي", "totalCost": 5000, "paid": 1000, "technology": "React js", "notes": "قيد التطوير" },
-                { "name": "Secure-Mind", "totalCost": 500, "paid": 0, "technology": "Word + PDF", "notes": "تحت الدراسة" }
+                { "name": "Secure-Mind", "totalCost": 500, "paid": 0, "technology": "Word + PDF", "notes": "بعض التنسيق" },
+                { "name": "لعبة الصحفيين", "totalCost": "1000 ~ 3000", "paid": 1000, "technology": "Vue js", "notes": "نحتاج ميتينج للتوضيح" }
             ],
             "research": [
-                { "name": "مشروع الاستاذ متعب HTML", "totalCost": 4000, "paid": 0, "technology": "HTML Css js", "notes": "جاري تصميم الصفحات" },
+                { "name": "مشروع الاستاذ متعب HTML", "totalCost": 4000, "paid": 0, "technology": "HTML Css js", "notes": "تم الانتهاء من 95%" },
                 { "name": "مشروع الاستاذ متعب Vue js", "totalCost": 6000, "paid": 0, "technology": "Vue", "notes": "بانتظار الموافقة" },
-                { "name": "لعبة الصحفيين", "totalCost": `1000 ~ 3000`, "paid": 0, "technology": "Vue js", "notes": "لم يبدأ بعد" },
-                { "name": "Secure-Mind Front end", "totalCost": 5000, "paid": 0, "technology": " Vue js", "notes": "13 صفحة يوزر (لا تشمل ال Auth) && 5  أدمن   + CURD" }
+            ],
+            "cancelled": [
+                { "name": "Secure-Mind Front end", "totalCost": 5000, "paid": 0, "technology": "Vue js", "notes": "ملغي - PHP Laravel" }
             ]
         };
         document.addEventListener("DOMContentLoaded", () => {
             // === دالة لتوليد صف موحد ===
             function createRow(item) {
-                const rem = (item.totalCost || 0) - (item.paid || 0);
+                const rem = (parseInt(item.totalCost) || 0) - (parseInt(item.paid) || 0);
                 return `
           <tr>
             <td data-label="اسم المشروع">${item.name || ''}</td>
-            <td data-label="التكلفة الإجمالية" style="font-weight: bold;">${(item.totalCost || 0).toLocaleString()} جنيه</td>
+            <td data-label="التكلفة الإجمالية" style="font-weight: bold;">${item.totalCost?.toLocaleString?.() || item.totalCost} جنيه</td>
             <td data-label="المدفوع" style="color: green; font-weight: bold;">${(item.paid || 0).toLocaleString()} جنيه</td>
-            <td data-label="الباقي" class="baki ${rem === 0 ? 'zero' : ''}">${rem.toLocaleString()} جنيه</td>
+            <td data-label="الباقي" class="baki ${rem === 0 ? 'zero' : ''}">${isNaN(rem) ? '-' : rem.toLocaleString()} جنيه</td>
             <td data-label="نوع التكنولوجيا">${item.technology || '-'}</td>
             <td data-label="ملاحظات">${item.notes || '-'}</td>
           </tr>
         `;
             }
-            // === ملء جدول المشاريع ===
+            // === ملء الجداول ===
             const projTbody = document.querySelector("#projectsTable tbody");
             projTbody.innerHTML = data.projects.map(createRow).join('');
-            // === ملء جدول البحث ===
             const resTbody = document.querySelector("#researchTable tbody");
-            if (data.research && data.research.length > 0) {
-                resTbody.innerHTML = data.research.map(createRow).join('');
-            } else {
-                resTbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">لا توجد بيانات للبحث</td></tr>`;
-            }
+            resTbody.innerHTML = data.research.length
+                ? data.research.map(createRow).join('')
+                : `<tr><td colspan="6" style="text-align:center;color:#999;">لا توجد بيانات للبحث</td></tr>`;
+            const cancTbody = document.querySelector("#cancelledTable tbody");
+            cancTbody.innerHTML = data.cancelled.length
+                ? data.cancelled.map(createRow).join('')
+                : `<tr><td colspan="6" style="text-align:center;color:#999;">لا توجد مشاريع ملغاة</td></tr>`;
         });
     </script>
 </body>
